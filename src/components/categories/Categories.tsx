@@ -1,14 +1,32 @@
+import {FC, useState} from "react";
 
-const Categories = () => {
+interface CategoriesProps {
+  categoryId: number;
+  setCategoryId: (id: number) => void;
+
+}
+
+const Categories: FC <CategoriesProps>  = ({categoryId, setCategoryId }) => {
+
+  const categories: string[] = ["Всі", "Мясні", "Вегетиріанські", "Гриль", "Гострі", "Закриті"]
+
+  const handleCategoryClick = (index:number) => {
+    console.log(index)
+    setCategoryId(index)
+  }
+
   return (
       <div className="categories">
         <ul>
-          <li className="active">Всі</li>
-          <li>Мясні</li>
-          <li>Вегетиріанські</li>
-          <li>Гриль</li>
-          <li>Гострі</li>
-          <li>Закриті</li>
+          {categories.map((category: string, index: number) =>
+              <li
+                  key={index}
+                  className={categoryId === index ? 'active' : ''}
+                  onClick={() => handleCategoryClick(index)}
+              >
+                {category}
+              </li>)
+          }
         </ul>
       </div>
   );

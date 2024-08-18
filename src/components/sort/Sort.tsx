@@ -1,5 +1,24 @@
+import {FC, useState} from "react";
+import {useAppDispatch, useAppSelector} from "../../hooks/redux.ts";
+import {setSortBy} from "../../store/redusers/search/FilterSlice.ts";
+import IFilter from "../../store/redusers/search/IFilter.ts";
 
-const Sort = () => {
+const Sort: FC = () => {
+
+  const dispatch = useAppDispatch()
+  const { name } = useAppSelector(state => state.searchReducer.sortBy)
+  const [isVisible, setIsVisible] = useState(false)
+  const list: Array<IFilter["sortBy"]> = [
+    {name: "популярності", sort: "rating"},
+    {name: "ціна", sort: "price"},
+    {name: "алфавіту", sort: "title"}
+  ]
+
+  const handleChangeActiveItem = (index) => {
+    dispatch(setSortBy(list[index]))
+    setIsVisible(false)
+  }
+
   return (
       <div className="sort">
         <div className="sort__label">
@@ -16,15 +35,22 @@ const Sort = () => {
             />
           </svg>
           <b>Сортувати по:</b>
-          <span>популярності</span>
+          <span onClick={() => setIsVisible(!isVisible)}>{name}</span>
         </div>
-        <div className="sort__popup">
-          <ul>
-            <li className="active">популярності</li>
-            <li>ціні</li>
-            <li>алфавіту</li>
-          </ul>
-        </div>
+        {isVisible &&
+          <div className="sort__popup">
+            <ul>
+              {list.map((item, index) =>
+                  <li key={index} className={name === list[index].name ? "active" : ""}
+                      onClick={() => handleChangeActiveItem(index)}>
+                    {item.name}
+                  </li>
+              )}
+            </ul>
+          </div>
+        }
+
+
       </div>
   );
 };
