@@ -6,31 +6,25 @@ import SkeletonPizza from "../../components/pizza/SkeletonPizza.tsx";
 import PizzaBlock, {IPizza} from "../../components/pizza/PizzaBlock.tsx";
 import Pagination from "../../components/pagination/Pagination.tsx";
 import {useAppSelector} from "../../hooks/redux.ts";
+import axios from "axios";
 
 const Home = () => {
 
   const searchValue = useAppSelector(state => state.searchReducer.query)
   const {sort} = useAppSelector(state => state.searchReducer.sortBy)
+  const currentPage = useAppSelector(state => state.searchReducer.pagination)
 
   const [items, setItems] = useState<IPizza[]>([])
   const [categoryId, setCategoryId] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
-  const currentPage = useAppSelector(state => state.searchReducer.pagination)
   const category = categoryId ? `category=${categoryId}&` : ""
 
 
   const fetchPizza = async () => {
     setIsLoading(true)
 
-    try {
-      const response = await fetch(`https://66b0c0f36a693a95b53a107f.mockapi.io/items?page=${currentPage}&limit=4&${category}sortBy=${sort}&order=desc`)
-      const data = await response.json()
-      setItems(data)
-
-    } catch (err) {
-      console.error(err)
-      setItems([])
-    }
+    const response = await axios.get(`https://66b0c0f36a693a95b53a107f.mockapi.io/items?page=${currentPage}&limit=12&${category}sortBy=${sort}&order=desc`)
+    setItems(response.data)
     setIsLoading(false)
   }
 
