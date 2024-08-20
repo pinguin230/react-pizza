@@ -5,7 +5,7 @@ const initialState: IFilter = {
   query: "",
   categoryId: 0,
   pagination: 1,
-  sortBy: {name: "популярності", sort: "rating"}
+  sortBy: {name: "популярності (DESC)", sort: "rating"}
 }
 
 const filterSlice = createSlice({

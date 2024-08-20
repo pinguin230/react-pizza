@@ -26,6 +26,7 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isFiltersLoaded, setIsFiltersLoaded] = useState(false);
   const category = Number(categoryId) === 0 ? "" : `category=${categoryId}&`;
+  const sortProperty = sort.includes('-') ? `sortBy=${sort.substring(1)}&order=asc` : `sortBy=${sort}&order=desc`
 
   const onChangeCategory = React.useCallback((idx: number) => {
     dispatch(setCategoryId(idx));
@@ -46,7 +47,7 @@ const Home = () => {
   const fetchPizza = async () => {
     setIsLoading(true);
     const response = await axios.get(
-        `https://66b0c0f36a693a95b53a107f.mockapi.io/items?page=${currentPage}&limit=4&${category}sortBy=${sort}&order=desc`
+        `https://66b0c0f36a693a95b53a107f.mockapi.io/items?page=${currentPage}&limit=4&${category}${sortProperty}`
     );
     setItems(response.data);
     setIsLoading(false);

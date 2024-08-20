@@ -4,9 +4,12 @@ import {setSortBy} from "../../store/redusers/search/FilterSlice.ts";
 import IFilter from "../../store/redusers/search/IFilter.ts";
 
 export const sortList: Array<IFilter["sortBy"]> = [
-  {name: "популярності", sort: "rating"},
-  {name: "ціна", sort: "price"},
-  {name: "алфавіту", sort: "title"}
+  {name: "популярності (DESC)", sort: "rating"},
+  {name: "популярності (ASC)", sort: "-rating"},
+  {name: "ціна (DESC)", sort: "price"},
+  {name: "ціна (ASC)", sort: "-price"},
+  {name: "алфавіту (DESC)", sort: "title"},
+  {name: "алфавіту (ASC)", sort: "-title"}
 ]
 
 const Sort: FC = () => {
