@@ -3,19 +3,21 @@ import {useAppDispatch, useAppSelector} from "../../hooks/redux.ts";
 import {setSortBy} from "../../store/redusers/search/FilterSlice.ts";
 import IFilter from "../../store/redusers/search/IFilter.ts";
 
+export const sortList: Array<IFilter["sortBy"]> = [
+  {name: "популярності", sort: "rating"},
+  {name: "ціна", sort: "price"},
+  {name: "алфавіту", sort: "title"}
+]
+
 const Sort: FC = () => {
 
   const dispatch = useAppDispatch()
   const { name } = useAppSelector(state => state.searchReducer.sortBy)
   const [isVisible, setIsVisible] = useState(false)
-  const list: Array<IFilter["sortBy"]> = [
-    {name: "популярності", sort: "rating"},
-    {name: "ціна", sort: "price"},
-    {name: "алфавіту", sort: "title"}
-  ]
+
 
   const handleChangeActiveItem = (index) => {
-    dispatch(setSortBy(list[index]))
+    dispatch(setSortBy(sortList[index]))
     setIsVisible(false)
   }
 
@@ -40,8 +42,8 @@ const Sort: FC = () => {
         {isVisible &&
           <div className="sort__popup">
             <ul>
-              {list.map((item, index) =>
-                  <li key={index} className={name === list[index].name ? "active" : ""}
+              {sortList.map((item, index) =>
+                  <li key={index} className={name === sortList[index].name ? "active" : ""}
                       onClick={() => handleChangeActiveItem(index)}>
                     {item.name}
                   </li>

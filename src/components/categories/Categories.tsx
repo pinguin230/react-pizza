@@ -1,35 +1,32 @@
-import {FC, useState} from "react";
+import {FC, memo, useMemo} from "react";
+
 
 interface CategoriesProps {
   categoryId: number;
-  setCategoryId: (id: number) => void;
-
+  onChangeCategory: (idx: number) => void
 }
 
-const Categories: FC <CategoriesProps>  = ({categoryId, setCategoryId }) => {
+const Categories: FC<CategoriesProps> = memo(({ categoryId, onChangeCategory }) => {
+  const categories = useMemo(() => ["Всі", "Мясні", "Вегетиріанські", "Гриль", "Гострі", "Закриті"], []);
 
-  const categories: string[] = ["Всі", "Мясні", "Вегетиріанські", "Гриль", "Гострі", "Закриті"]
-
-  const handleCategoryClick = (index:number) => {
-    console.log(index)
-    setCategoryId(index)
-  }
 
   return (
       <div className="categories">
         <ul>
-          {categories.map((category: string, index: number) =>
-              <li
-                  key={index}
-                  className={categoryId === index ? 'active' : ''}
-                  onClick={() => handleCategoryClick(index)}
-              >
-                {category}
-              </li>)
-          }
+          {categories.map((category: string, index: number) => {
+            return (
+                <li
+                    key={index}
+                    className={index === Number(categoryId) ? 'active' : ''}
+                    onClick={() => onChangeCategory(index)}
+                >
+                  {category}
+                </li>
+            );
+          })}
         </ul>
       </div>
   );
-};
+});
 
 export default Categories;
