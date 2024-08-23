@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import Categories from "../../components/categories/Categories.tsx";
 import Sort, {sortList} from "../../components/sort/Sort.tsx";
@@ -85,8 +85,6 @@ const Home = () => {
       })
       .map((pizza) => <PizzaBlock key={pizza.title} pizza={pizza} />);
 
-
-  console.log("Home page")
   return (
       <>
         <div className="content__top">

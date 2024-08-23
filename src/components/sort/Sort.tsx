@@ -1,4 +1,4 @@
-import {FC, useState} from "react";
+import {FC, useEffect, useRef, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux.ts";
 import {setSortBy} from "../../store/redusers/search/FilterSlice.ts";
 import IFilter from "../../store/redusers/search/IFilter.ts";
@@ -17,15 +17,30 @@ const Sort: FC = () => {
   const dispatch = useAppDispatch()
   const { name } = useAppSelector(state => state.searchReducer.sortBy)
   const [isVisible, setIsVisible] = useState(false)
-
+  const sortRef = useRef()
 
   const handleChangeActiveItem = (index) => {
     dispatch(setSortBy(sortList[index]))
     setIsVisible(false)
   }
 
+  useEffect(() => {
+
+    const handleClickOutside = (event)=>{
+      if(!event.composedPath().includes(sortRef.current)){
+        setIsVisible(false)
+      }
+    }
+
+    document.body.addEventListener('click', handleClickOutside)
+
+    return () => {
+      document.body.removeEventListener('click', handleClickOutside)
+    }
+  }, []);
+
   return (
-      <div className="sort">
+      <div ref={sortRef} className="sort">
         <div className="sort__label">
           <svg
               width="10"

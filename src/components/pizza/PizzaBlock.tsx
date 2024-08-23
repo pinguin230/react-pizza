@@ -1,4 +1,6 @@
 import {FC, useState} from "react";
+import {useAppDispatch, useAppSelector} from "../../hooks/redux.ts";
+import {addItem} from "../../store/redusers/basket/BasketSlice.ts";
 
 
 export interface IPizza {
@@ -14,8 +16,27 @@ export interface IPizza {
 
 const PizzaBlock: FC<{ pizza: IPizza }> = ({pizza}) => {
 
+  const dispatch = useAppDispatch()
+  const obj = useAppSelector(state => state.basketReducer.items.find((obj) => obj.id === pizza.id))
+  const count = obj ? obj.count : 0
   const [activeSize, setActiveSize] = useState(0)
   const [activeType, setActiveType] = useState(0)
+  const typeNames = ["тонка", "традиційна"]
+
+
+
+  const onClickAdd = () => {
+    const updatedPizza = {
+      id: pizza.id,
+      title: pizza.title,
+      imageUrl: pizza.imageUrl,
+      price: pizza.price,
+      size: `${pizza.sizes[activeSize]} см`,
+      type: typeNames[activeType]
+    };
+
+    dispatch(addItem(updatedPizza))
+  }
 
   return (
       <div className="pizza-block-wrapper">
@@ -34,7 +55,7 @@ const PizzaBlock: FC<{ pizza: IPizza }> = ({pizza}) => {
                       className={activeType === type ? "active" : ""}
                       onClick={() => setActiveType(type)}
                   >
-                    {type ? "традиційна" : "тонка"}
+                    {type ? typeNames[type] : typeNames[type]}
                   </li>
               )}
             </ul>
@@ -51,7 +72,7 @@ const PizzaBlock: FC<{ pizza: IPizza }> = ({pizza}) => {
           </div>
           <div className="pizza-block__bottom">
             <div className="pizza-block__price">від {pizza.price} грн</div>
-            <div className="button button--outline button--add">
+            <button onClick={onClickAdd} className="button button--outline button--add">
               <svg
                   width="12"
                   height="12"
@@ -65,8 +86,8 @@ const PizzaBlock: FC<{ pizza: IPizza }> = ({pizza}) => {
                 />
               </svg>
               <span>Добавити</span>
-              <i>2</i>
-            </div>
+              {count > 0 && <i>{count}</i>}
+            </button>
           </div>
         </div>
       </div>
