@@ -11,5 +11,7 @@ export interface IPizzaItem {
 }
 
 export default interface IPizza {
-  pizzas: IPizzaItem[]
+  pizzas: IPizzaItem[],
+  isLoading: boolean,
+  error: string | ''
 }
