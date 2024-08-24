@@ -1,20 +1,9 @@
 import {FC, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux.ts";
 import {addItem} from "../../store/redusers/basket/BasketSlice.ts";
+import {IPizzaItem} from "../../store/redusers/pizza/IPizza.ts";
 
-
-export interface IPizza {
-  "id": number,
-  "imageUrl": string,
-  "title": string,
-  "types": number[],
-  "sizes": number[],
-  "price": number,
-  "category": number,
-  "rating": number
-}
-
-const PizzaBlock: FC<{ pizza: IPizza }> = ({pizza}) => {
+const PizzaBlock: FC<{ pizza: IPizzaItem }> = ({pizza}) => {
 
   const dispatch = useAppDispatch()
   const obj = useAppSelector(state => state.basketReducer.items.find((obj) => obj.id === pizza.id))

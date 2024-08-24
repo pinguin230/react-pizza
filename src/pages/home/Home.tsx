@@ -3,13 +3,14 @@ import React, {useEffect, useRef, useState} from 'react';
 import Categories from "../../components/categories/Categories.tsx";
 import Sort, {sortList} from "../../components/sort/Sort.tsx";
 import SkeletonPizza from "../../components/pizza/SkeletonPizza.tsx";
-import PizzaBlock, {IPizza} from "../../components/pizza/PizzaBlock.tsx";
+import PizzaBlock from "../../components/pizza/PizzaBlock.tsx";
 import Pagination from "../../components/pagination/Pagination.tsx";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux.ts";
 import axios from "axios";
 import qs from "qs"
 import {useNavigate} from "react-router-dom";
 import {setCategoryId, setFilters} from "../../store/redusers/search/FilterSlice.ts";
+import {addPizza} from "../../store/redusers/pizza/PizzaSlice.ts";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -22,7 +23,8 @@ const Home = () => {
   const currentPage = useAppSelector(state => state.searchReducer.pagination);
   const categoryId = useAppSelector(state => state.searchReducer.categoryId);
 
-  const [items, setItems] = useState<IPizza[]>([]);
+  const items = useAppSelector(state => state.pizzaReducer.pizzas)
+  // const [items, setItems] = useState<IPizza[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isFiltersLoaded, setIsFiltersLoaded] = useState(false);
   const category = Number(categoryId) === 0 ? "" : `category=${categoryId}&`;
@@ -46,11 +48,17 @@ const Home = () => {
 
   const fetchPizza = async () => {
     setIsLoading(true);
-    const response = await axios.get(
-        `https://66b0c0f36a693a95b53a107f.mockapi.io/items?page=${currentPage}&limit=4&${category}${sortProperty}`
-    );
-    setItems(response.data);
-    setIsLoading(false);
+    try {
+      const response = await axios.get(
+          `https://66b0c0f36a693a95b53a107f.mockapi.io/items?page=${currentPage}&limit=4&${category}${sortProperty}`
+      );
+      dispatch(addPizza(response.data));
+    } catch (error) {
+      alert("Помилка при отриманні піци");
+      console.log("Error", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -64,10 +72,10 @@ const Home = () => {
     if (isMounted.current) {
       const queryString = qs.stringify({
         category: categoryId,
-        sortBy: sort,
+        sortBy: sort.includes('-') ? `${sort.substring(1)}` : `${sort}`,
         page: currentPage,
         limit: 4,
-        order: "desc",
+        order: sort.includes('-') ? `asc` : `desc`,
       });
 
       navigate(`?${queryString}`);

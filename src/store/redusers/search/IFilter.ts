@@ -3,4 +3,5 @@ export default interface IFilter {
   pagination: number,
   categoryId: number,
   sortBy: { name: string, sort: string }
+  order: string
 }

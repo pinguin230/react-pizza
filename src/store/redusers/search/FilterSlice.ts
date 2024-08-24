@@ -5,7 +5,8 @@ const initialState: IFilter = {
   query: "",
   categoryId: 0,
   pagination: 1,
-  sortBy: {name: "популярності (DESC)", sort: "rating"}
+  sortBy: {name: "популярності (DESC)", sort: "rating"},
+  order: "desc"
 }
 
 const filterSlice = createSlice({
@@ -32,6 +33,7 @@ const filterSlice = createSlice({
       state.categoryId= action.payload.category;
       state.pagination = action.payload.page;
       state.sortBy = action.payload.sort;
+      state.order = action.payload.order;
     }
 
   },

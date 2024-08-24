@@ -20,7 +20,7 @@ const Search = ({placeholder}) => {
   const debounceDispatch = useCallback(
       debounce((query: string) => {
         dispatch(setSearchQuery(query))
-  }, 250), [])
+      }, 250), [])
 
   const handleSearchQueryChange = (e) => {
     setInputValue(e.target.value)
