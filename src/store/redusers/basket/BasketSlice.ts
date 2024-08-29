@@ -59,5 +59,7 @@ const basketSlice = createSlice({
   },
 })
 
+export const selectPizzaItemById = (id) => state => state.basketReducer.items.find((obj) => obj.id === id)
+
 export const {decreaseItem, increaseItem, addItem, deleteItem, clearItem} = basketSlice.actions;
 export default basketSlice.reducer;

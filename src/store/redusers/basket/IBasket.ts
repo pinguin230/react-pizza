@@ -5,7 +5,7 @@ export default interface IBasket {
 
 
 export interface IBasketItem {
-  id: number
+  id: string
   title: string
   price: number
   size: string

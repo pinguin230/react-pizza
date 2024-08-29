@@ -1,7 +1,7 @@
 
 export interface IPizzaItem {
   category: number;
-  id: number;
+  id: string;
   imageUrl: string;
   price: number;
   rating: number;

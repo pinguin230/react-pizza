@@ -12,11 +12,7 @@ const initialState: IPizza = {
 const pizzaSlice = createSlice({
   name: "pizzas",
   initialState: initialState,
-  reducers: {
-    addPizza(state, action: PayloadAction<IPizzaItem[]>) {
-      state.pizzas = action.payload;
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
         .addCase(fetchPizzas.fulfilled, (state, action: PayloadAction<IPizzaItem[]>) => {
@@ -36,5 +32,5 @@ const pizzaSlice = createSlice({
 
 })
 
-export const {addPizza} = pizzaSlice.actions;
+// export const {addPizza} = pizzaSlice.actions;
 export default pizzaSlice.reducer;

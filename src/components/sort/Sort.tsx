@@ -1,6 +1,6 @@
 import {FC, useEffect, useRef, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux.ts";
-import {setSortBy} from "../../store/redusers/search/FilterSlice.ts";
+import {selectSortBy, setSortBy} from "../../store/redusers/search/FilterSlice.ts";
 import IFilter from "../../store/redusers/search/IFilter.ts";
 
 export const sortList: Array<IFilter["sortBy"]> = [
@@ -15,7 +15,7 @@ export const sortList: Array<IFilter["sortBy"]> = [
 const Sort: FC = () => {
 
   const dispatch = useAppDispatch()
-  const { name } = useAppSelector(state => state.searchReducer.sortBy)
+  const { name } = useAppSelector(selectSortBy)
   const [isVisible, setIsVisible] = useState(false)
   const sortRef = useRef()
 

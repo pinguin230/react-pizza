@@ -8,6 +8,7 @@ import ErrorPage from "./pages/error/ErrorPage.tsx";
 import BasketPage from "./pages/basket/BasketPage.tsx";
 import {Provider} from "react-redux";
 import store from "./store/store.ts";
+import FullPizzaPage from "./pages/pizza-page/FullPizzaPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -17,7 +18,7 @@ const router = createBrowserRouter([
     children: [
       {path: '/', element: <Home/>},
       {path: '/basket', element: <BasketPage/>,},
-      // {path: 'contact', element: <ContactPage/>},
+      {path: '/pizza/:id', element: <FullPizzaPage/>},
       // {path: '*', element: <NotFoundPage/>}
     ]
   }

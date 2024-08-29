@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import Categories from "../../components/categories/Categories.tsx";
 import Sort, {sortList} from "../../components/sort/Sort.tsx";
@@ -8,7 +8,7 @@ import Pagination from "../../components/pagination/Pagination.tsx";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux.ts";
 import qs from "qs"
 import {useNavigate} from "react-router-dom";
-import {setCategoryId, setFilters} from "../../store/redusers/search/FilterSlice.ts";
+import {selectCurrentPage, selectSortBy, setCategoryId, setFilters} from "../../store/redusers/search/FilterSlice.ts";
 import {fetchPizzas} from "../../store/redusers/pizza/ActionCreators.ts";
 
 const Home = () => {
@@ -18,8 +18,8 @@ const Home = () => {
   const isMounted = useRef(false);
 
   const searchValue = useAppSelector(state => state.searchReducer.query);
-  const { sort } = useAppSelector(state => state.searchReducer.sortBy);
-  const currentPage = useAppSelector(state => state.searchReducer.pagination);
+  const { sort } = useAppSelector(selectSortBy);
+  const currentPage = useAppSelector(selectCurrentPage);
   const categoryId = useAppSelector(state => state.searchReducer.categoryId);
   const items = useAppSelector(state => state.pizzaReducer.pizzas)
 
@@ -27,7 +27,7 @@ const Home = () => {
   const isLoading = useAppSelector(state => state.pizzaReducer.isLoading)
   const [isFiltersLoaded, setIsFiltersLoaded] = useState(false);
 
-  const onChangeCategory = React.useCallback((idx: number) => {
+  const onChangeCategory = useCallback((idx: number) => {
     dispatch(setCategoryId(idx));
   }, []);
 
