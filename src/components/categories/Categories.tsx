@@ -7,7 +7,7 @@ interface CategoriesProps {
 }
 
 const Categories: FC<CategoriesProps> = memo(({ categoryId, onChangeCategory }) => {
-  const categories = useMemo(() => ["Всі", "Мясні", "Вегетиріанські", "Гриль", "Гострі", "Закриті"], []);
+  const categories: string[] = useMemo(() => ["Всі", "Мясні", "Вегетиріанські", "Гриль", "Гострі", "Закриті"], []);
 
 
   return (

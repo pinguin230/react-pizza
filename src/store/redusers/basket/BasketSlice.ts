@@ -1,5 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import IBasket, {IBasketItem} from "./IBasket.ts";
+import {RootState} from "../../store.ts";
 
 const initialState: IBasket = {
   totalPrice: 0,
@@ -26,7 +27,7 @@ const basketSlice = createSlice({
 
       state.totalPrice = calculateTotalPrice(state.items);
     },
-    deleteItem(state, action: PayloadAction<number>){
+    deleteItem(state, action: PayloadAction<string>){
       state.items = state.items.filter(item => item.id !== action.payload);
       state.totalPrice = calculateTotalPrice(state.items);
     },
@@ -34,7 +35,7 @@ const basketSlice = createSlice({
       state.items = [];
       state.totalPrice = calculateTotalPrice(state.items);
     },
-    increaseItem(state, action: PayloadAction<number>) {
+    increaseItem(state, action: PayloadAction<string>) {
       const findItem = state.items.find((obj) => obj.id === action.payload);
 
       if (findItem) {
@@ -42,7 +43,7 @@ const basketSlice = createSlice({
       }
       state.totalPrice = calculateTotalPrice(state.items);
     },
-    decreaseItem(state, action: PayloadAction<number>) {
+    decreaseItem(state, action: PayloadAction<string>) {
       const findItem = state.items.find((obj) => obj.id === action.payload);
 
       if (findItem) {
@@ -59,7 +60,7 @@ const basketSlice = createSlice({
   },
 })
 
-export const selectPizzaItemById = (id) => state => state.basketReducer.items.find((obj) => obj.id === id)
+export const selectPizzaItemById = (id: string) => (state: RootState) => state.basketReducer.items.find((obj) => obj.id === id)
 
 export const {decreaseItem, increaseItem, addItem, deleteItem, clearItem} = basketSlice.actions;
 export default basketSlice.reducer;

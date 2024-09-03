@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
 
 import Categories from "../../components/categories/Categories.tsx";
 import Sort, {sortList} from "../../components/sort/Sort.tsx";
@@ -11,14 +11,14 @@ import {useNavigate} from "react-router-dom";
 import {selectCurrentPage, selectSortBy, setCategoryId, setFilters} from "../../store/redusers/search/FilterSlice.ts";
 import {fetchPizzas} from "../../store/redusers/pizza/ActionCreators.ts";
 
-const Home = () => {
+const Home: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
   const searchValue = useAppSelector(state => state.searchReducer.query);
-  const { sort } = useAppSelector(selectSortBy);
+  const { sort, name } = useAppSelector(selectSortBy);
   const currentPage = useAppSelector(selectCurrentPage);
   const categoryId = useAppSelector(state => state.searchReducer.categoryId);
   const items = useAppSelector(state => state.pizzaReducer.pizzas)
@@ -88,7 +88,7 @@ const Home = () => {
       <>
         <div className="content__top">
           {isFiltersLoaded && <Categories categoryId={categoryId} onChangeCategory={onChangeCategory}/>}
-          <Sort />
+          <Sort name={name}/>
         </div>
         <h2 className="content__title">Всі піци</h2>
         <div className="content__items">

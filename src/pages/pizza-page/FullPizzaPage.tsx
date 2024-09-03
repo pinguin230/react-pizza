@@ -1,9 +1,9 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import {IPizzaItem} from "../../store/redusers/pizza/IPizza.ts";
 
-const FullPizzaPage = () => {
+const FullPizzaPage: FC = () => {
 
   const { id } = useParams();
   const navigate = useNavigate();

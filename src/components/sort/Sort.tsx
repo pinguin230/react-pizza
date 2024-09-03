@@ -1,4 +1,4 @@
-import {FC, useEffect, useRef, useState} from "react";
+import {FC, memo, useEffect, useRef, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux.ts";
 import {selectSortBy, setSortBy} from "../../store/redusers/search/FilterSlice.ts";
 import IFilter from "../../store/redusers/search/IFilter.ts";
@@ -12,21 +12,24 @@ export const sortList: Array<IFilter["sortBy"]> = [
   {name: "алфавіту (ASC)", sort: "-title"}
 ]
 
-const Sort: FC = () => {
+interface SortProps {
+  name: string;
+}
+
+const Sort: FC<SortProps> = memo(({name}) => {
 
   const dispatch = useAppDispatch()
-  const { name } = useAppSelector(selectSortBy)
   const [isVisible, setIsVisible] = useState(false)
-  const sortRef = useRef()
+  const sortRef = useRef(null)
 
-  const handleChangeActiveItem = (index) => {
+  const handleChangeActiveItem = (index: number) => {
     dispatch(setSortBy(sortList[index]))
     setIsVisible(false)
   }
 
   useEffect(() => {
 
-    const handleClickOutside = (event)=>{
+    const handleClickOutside = (event: MouseEvent)=>{
       if(!event.composedPath().includes(sortRef.current)){
         setIsVisible(false)
       }
@@ -73,6 +76,6 @@ const Sort: FC = () => {
 
       </div>
   );
-};
+});
 
 export default Sort;

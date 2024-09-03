@@ -1,12 +1,17 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {decreaseItem, deleteItem, increaseItem} from "../../store/redusers/basket/BasketSlice.ts";
 import {useAppDispatch} from "../../hooks/redux.ts";
 import {IBasketItem} from "../../store/redusers/basket/IBasket.ts";
+import clsx from "clsx";
 
-const BasketItem = ({items}) => {
+interface BasketItemProps {
+  items: IBasketItem[]
+}
+
+const BasketItem: FC<BasketItemProps> = ({items}) => {
 
   const dispatch = useAppDispatch()
-  const handleDeleteItem = (id: number) => {
+  const handleDeleteItem = (id: string) => {
 
     if (window.confirm("Ти дійсно хочеш видалити цю піцу?")) {
       dispatch(deleteItem(id))
@@ -29,7 +34,10 @@ const BasketItem = ({items}) => {
                 </div>
                 <div className="cart__item-count">
                   <button onClick={() => dispatch(decreaseItem(pizza.id))}
-                          className="button button--outline button--circle cart__item-count-minus">
+                          disabled={pizza.count === 1}
+                          className={clsx("button button--outline button--circle cart__item-count-minus",
+                              {"cart__item-count-minus--disabled": pizza.count === 1})}
+                  >
                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path
                           d="M5.92001 3.84V5.76V8.64C5.92001 9.17016 5.49017 9.6 4.96001 9.6C4.42985 9.6 4.00001 9.17016 4.00001 8.64L4 5.76L4.00001 3.84V0.96C4.00001 0.42984 4.42985 0 4.96001 0C5.49017 0 5.92001 0.42984 5.92001 0.96V3.84Z"

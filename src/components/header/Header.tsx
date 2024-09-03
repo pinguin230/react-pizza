@@ -2,13 +2,14 @@ import logo from "../../assets/img/pizza-logo.svg"
 import {Link, useLocation} from "react-router-dom";
 import Search from "../search/Search.tsx";
 import {useAppSelector} from "../../hooks/redux.ts";
+import {FC} from "react";
 
 
-const Header = () => {
+const Header: FC = () => {
 
   const location = useLocation()
   const {totalPrice: price, items} = useAppSelector(state => state.basketReducer)
-  const totalCount = items.reduce((acc, pizza)=> {return acc + pizza.count}, 0)
+  const totalCount: number = items.reduce((acc, pizza)=> {return acc + pizza.count}, 0)
 
   return (
       <div className="header">
@@ -22,7 +23,7 @@ const Header = () => {
               </div>
             </div>
           </Link>
-          <Search placeholder="Пошук..."/>
+          {location.pathname !== '/basket' && <Search placeholder="Пошук..."/>}
           <div className="header__cart">
             {location.pathname !== '/basket' && <Link to="/basket" className="button button--cart">
               <span>{price} ₴</span>

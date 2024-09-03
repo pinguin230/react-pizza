@@ -8,7 +8,7 @@ const PizzaBlock: FC<{ pizza: IPizzaItem }> = ({pizza}) => {
 
   const dispatch = useAppDispatch()
   const obj = useAppSelector(selectPizzaItemById(pizza.id))
-  const count = obj ? obj.count : 0
+  const count: number = obj ? obj.count : 0
   const [activeSize, setActiveSize] = useState(0)
   const [activeType, setActiveType] = useState(0)
   const typeNames = ["тонка", "традиційна"]
@@ -40,10 +40,10 @@ const PizzaBlock: FC<{ pizza: IPizzaItem }> = ({pizza}) => {
           </Link>
           <div className="pizza-block__selector">
             <ul>
-              {pizza.types.map((type) =>
+              {pizza.types.map((type, index) =>
                   <li
                       key={type}
-                      className={activeType === type ? "active" : ""}
+                      className={activeType === index ? "active" : ""}
                       onClick={() => setActiveType(type)}
                   >
                     {type ? typeNames[type] : typeNames[type]}

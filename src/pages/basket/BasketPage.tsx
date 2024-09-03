@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {Link} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux.ts";
 import {clearItem} from "../../store/redusers/basket/BasketSlice.ts";
 import BasketItem from "./BasketItem.tsx";
 import EmptyBasket from "./EmptyBasket.tsx";
 
-const BasketPage = () => {
+const BasketPage: FC = () => {
 
   const dispatch = useAppDispatch()
   const items = useAppSelector(state => state.basketReducer.items)

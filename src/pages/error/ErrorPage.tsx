@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {FC} from 'react';
 import style from "./ErrorPage.module.scss";
-import {Link, Outlet} from "react-router-dom";
+import {Link} from "react-router-dom";
 import Header from "../../components/header/Header.tsx";
 
-const ErrorPage = () => {
+const ErrorPage: FC = () => {
   return (
       <div className="wrapper">
         <Header/>

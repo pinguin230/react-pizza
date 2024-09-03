@@ -2,7 +2,8 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import {IPizzaItem} from "./IPizza.ts";
 import axios from "axios";
 
-export const fetchPizzas = createAsyncThunk<IPizzaItem[], {category: string, sortProperty:string, currentPage: number}, {rejectValue: string}>(
+type FetchPizzaProps = { category: string, sortProperty: string, currentPage: number }
+export const fetchPizzas = createAsyncThunk<IPizzaItem[], FetchPizzaProps, { rejectValue: string }>(
     'pizzas/fetchPizzas',
     async ({category, sortProperty, currentPage}, thunkAPI) => {
       try {
@@ -15,5 +16,4 @@ export const fetchPizzas = createAsyncThunk<IPizzaItem[], {category: string, sor
         return thunkAPI.rejectWithValue("Не вдалось загрузити піцу")
       }
     }
-
 )

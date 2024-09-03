@@ -1,12 +1,15 @@
 import style from "./Search.module.scss";
 
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {ChangeEvent, FC, useCallback, useEffect, useRef, useState} from 'react';
 import debounce from "lodash/debounce";
 import {useAppDispatch} from "../../hooks/redux.ts";
 import {setSearchQuery} from "../../store/redusers/search/FilterSlice.ts";
 
+interface SearchProps {
+  placeholder: string;
+}
 
-const Search = ({placeholder}) => {
+const Search: FC<SearchProps> = ({placeholder}) => {
 
   const dispatch = useAppDispatch()
   const inputRef = useRef<HTMLInputElement | null>(null)
@@ -15,14 +18,14 @@ const Search = ({placeholder}) => {
   const onClickClear = () => {
     dispatch(setSearchQuery(""))
     setInputValue("")
-    inputRef.current.focus()
+    inputRef.current?.focus()
   }
   const debounceDispatch = useCallback(
       debounce((query: string) => {
         dispatch(setSearchQuery(query))
       }, 250), [])
 
-  const handleSearchQueryChange = (e) => {
+  const handleSearchQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
     debounceDispatch(e.target.value)
   }
