@@ -1,6 +1,6 @@
 import {FC, memo, useEffect, useRef, useState} from "react";
-import {useAppDispatch, useAppSelector} from "../../hooks/redux.ts";
-import {selectSortBy, setSortBy} from "../../store/redusers/search/FilterSlice.ts";
+import {useAppDispatch} from "../../hooks/redux.ts";
+import {setSortBy} from "../../store/redusers/search/FilterSlice.ts";
 import IFilter from "../../store/redusers/search/IFilter.ts";
 
 export const sortList: Array<IFilter["sortBy"]> = [

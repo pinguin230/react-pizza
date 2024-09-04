@@ -1,8 +1,9 @@
 import {FC, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux.ts";
-import {addItem, selectPizzaItemById} from "../../store/redusers/basket/BasketSlice.ts";
+import {addItem} from "../../store/redusers/basket/BasketSlice.ts";
 import {IPizzaItem} from "../../store/redusers/pizza/IPizza.ts";
 import {Link} from "react-router-dom";
+import {selectPizzaItemById} from "../../store/redusers/basket/Selectors.ts";
 
 const PizzaBlock: FC<{ pizza: IPizzaItem }> = ({pizza}) => {
 

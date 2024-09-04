@@ -8,8 +8,9 @@ import Pagination from "../../components/pagination/Pagination.tsx";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux.ts";
 import qs from "qs"
 import {useNavigate} from "react-router-dom";
-import {selectCurrentPage, selectSortBy, setCategoryId, setFilters} from "../../store/redusers/search/FilterSlice.ts";
+import {setCategoryId, setFilters} from "../../store/redusers/search/FilterSlice.ts";
 import {fetchPizzas} from "../../store/redusers/pizza/ActionCreators.ts";
+import {selectCurrentPage, selectSortBy} from "../../store/redusers/search/Selectors.ts";
 
 const Home: FC = () => {
   const navigate = useNavigate();

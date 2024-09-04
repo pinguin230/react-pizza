@@ -1,6 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import IFilter from "./IFilter.ts";
-import {RootState} from "../../store.ts";
 
 const initialState: IFilter = {
   query: "",
@@ -40,8 +39,6 @@ const filterSlice = createSlice({
   },
 })
 
-export const selectSortBy = (state: RootState) => state.searchReducer.sortBy
-export const selectCurrentPage = (state: RootState) => state.searchReducer.pagination
 
 export const {setCategoryId, setFilters, setSearchQuery, setPagination, setSortBy} = filterSlice.actions;
 export default filterSlice.reducer;

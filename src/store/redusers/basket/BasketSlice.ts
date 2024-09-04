@@ -1,10 +1,13 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import IBasket, {IBasketItem} from "./IBasket.ts";
-import {RootState} from "../../store.ts";
+import {getPizzasFromLS} from "../../../utils/getPizzasFromLS.ts";
+
+
+const {totalPrice, items} = getPizzasFromLS()
 
 const initialState: IBasket = {
-  totalPrice: 0,
-  items: []
+  totalPrice,
+  items
 }
 
 const calculateTotalPrice = (items: IBasketItem[]): number => {
@@ -60,7 +63,6 @@ const basketSlice = createSlice({
   },
 })
 
-export const selectPizzaItemById = (id: string) => (state: RootState) => state.basketReducer.items.find((obj) => obj.id === id)
 
 export const {decreaseItem, increaseItem, addItem, deleteItem, clearItem} = basketSlice.actions;
 export default basketSlice.reducer;
