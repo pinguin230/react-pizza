@@ -83,7 +83,7 @@ const Home: FC = () => {
         }
         return false;
       })
-      .map((pizza) => <PizzaBlock key={pizza.title} pizza={pizza} />);
+      .map((pizza, index) => <PizzaBlock key={pizza.title} index={index} pizza={pizza} />);
 
   return (
       <>
@@ -97,7 +97,7 @@ const Home: FC = () => {
               ? <h1>{isError}</h1>
               : isLoading ? skeletons : pizzas}
         </div>
-        <Pagination />
+        {items.length === 8 && <Pagination/>}
       </>
   );
 };

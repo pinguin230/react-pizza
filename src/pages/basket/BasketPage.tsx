@@ -12,7 +12,7 @@ const BasketPage: FC = () => {
 
 
   const clearBasket = () => {
-    if (window.confirm("Ти дійсно хочеш очистити корзину?")) {
+    if (window.confirm("Ви дійсно хочете очистити корзину?")) {
       dispatch(clearItem())
     }
   };
@@ -85,7 +85,7 @@ const BasketPage: FC = () => {
                           strokeLinejoin="round"></path>
                   </svg>
 
-                  <span>Повернутись назад</span>
+                  <span>Повернутись на головну</span>
                 </Link>
                 <div className="button pay-btn">
                   <span>Оплатити зараз</span>

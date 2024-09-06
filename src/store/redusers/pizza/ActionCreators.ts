@@ -8,7 +8,7 @@ export const fetchPizzas = createAsyncThunk<IPizzaItem[], FetchPizzaProps, { rej
     async ({category, sortProperty, currentPage}, thunkAPI) => {
       try {
         const response = await axios.get(
-            `https://66b0c0f36a693a95b53a107f.mockapi.io/items?page=${currentPage}&limit=4&${category}${sortProperty}`
+            `https://66b0c0f36a693a95b53a107f.mockapi.io/items?page=${currentPage}&limit=8&${category}${sortProperty}`
         );
         return response.data;
 

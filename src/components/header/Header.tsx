@@ -30,7 +30,7 @@ const Header: FC = () => {
               <img width="38" src={logo} alt="Pizza logo"/>
               <div className="header__logo--title">
                 <h1>React Pizza</h1>
-                <p>найбільш смачна піца у всесвіті</p>
+                <p>найсмачніша піца у всесвіті</p>
               </div>
             </div>
           </Link>

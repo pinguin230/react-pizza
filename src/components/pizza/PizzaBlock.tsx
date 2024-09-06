@@ -1,11 +1,12 @@
-import {FC, useState} from "react";
+import {FC, useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux.ts";
 import {addItem} from "../../store/redusers/basket/BasketSlice.ts";
 import {IPizzaItem} from "../../store/redusers/pizza/IPizza.ts";
 import {Link} from "react-router-dom";
 import {selectPizzaItemById} from "../../store/redusers/basket/Selectors.ts";
+import {setPagination} from "../../store/redusers/search/FilterSlice.ts";
 
-const PizzaBlock: FC<{ pizza: IPizzaItem }> = ({pizza}) => {
+const PizzaBlock: FC<{ pizza: IPizzaItem, index: number }> = ({pizza, index}) => {
 
   const dispatch = useAppDispatch()
   const obj = useAppSelector(selectPizzaItemById(pizza.id))
@@ -14,13 +15,18 @@ const PizzaBlock: FC<{ pizza: IPizzaItem }> = ({pizza}) => {
   const [activeType, setActiveType] = useState(0)
   const typeNames = ["тонка", "традиційна"]
 
+  useEffect(() => {
+    if (index){
+      dispatch(setPagination(1))
+    }
+  }, []);
 
   const onClickAdd = () => {
     const updatedPizza = {
       id: pizza.id,
       title: pizza.title,
       imageUrl: pizza.imageUrl,
-      price: pizza.price,
+      price: pizza.price[activeSize],
       size: `${pizza.sizes[activeSize]} см`,
       type: typeNames[activeType]
     };
@@ -63,7 +69,7 @@ const PizzaBlock: FC<{ pizza: IPizzaItem }> = ({pizza}) => {
             </ul>
           </div>
           <div className="pizza-block__bottom">
-            <div className="pizza-block__price">від {pizza.price} грн</div>
+            <div className="pizza-block__price">від {pizza.price[activeSize]} грн</div>
             <button onClick={onClickAdd} className="button button--outline button--add">
               <svg
                   width="12"

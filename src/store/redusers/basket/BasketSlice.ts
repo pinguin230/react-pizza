@@ -20,34 +20,48 @@ const basketSlice = createSlice({
   initialState: initialState,
   reducers: {
     addItem(state, action: PayloadAction<IBasketItem>) {
-      const findItem = state.items.find((obj) => obj.id === action.payload.id);
+      const { id, size, type } = action.payload;
+
+      const findItem = state.items.find(
+          (obj) => obj.id === id && obj.size === size && obj.type === type
+      );
 
       if (findItem) {
-        findItem.count++
+        findItem.count++;
       } else {
-        state.items.push({...action.payload, count: 1});
+        state.items.push({ ...action.payload, count: 1 });
       }
 
       state.totalPrice = calculateTotalPrice(state.items);
     },
-    deleteItem(state, action: PayloadAction<string>){
-      state.items = state.items.filter(item => item.id !== action.payload);
+    deleteItem(state, action: PayloadAction<IBasketItem>){
+      const { id, size, type } = action.payload;
+
+      state.items = state.items.filter(item => item.id !== id || item.size !== size || item.type !== type);
       state.totalPrice = calculateTotalPrice(state.items);
     },
     clearItem(state) {
       state.items = [];
       state.totalPrice = calculateTotalPrice(state.items);
     },
-    increaseItem(state, action: PayloadAction<string>) {
-      const findItem = state.items.find((obj) => obj.id === action.payload);
+    increaseItem(state, action: PayloadAction<IBasketItem>) {
+      const { id, size, type } = action.payload;
+
+      const findItem = state.items.find(
+          (obj) => obj.id === id && obj.size === size && obj.type === type
+      );
 
       if (findItem) {
         findItem.count++;
       }
       state.totalPrice = calculateTotalPrice(state.items);
     },
-    decreaseItem(state, action: PayloadAction<string>) {
-      const findItem = state.items.find((obj) => obj.id === action.payload);
+    decreaseItem(state, action: PayloadAction<IBasketItem>) {
+      const { id, size, type } = action.payload;
+
+      const findItem = state.items.find(
+          (obj) => obj.id === id && obj.size === size && obj.type === type
+      );
 
       if (findItem) {
         findItem.count--;

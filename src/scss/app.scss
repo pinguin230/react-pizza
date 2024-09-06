@@ -34,7 +34,7 @@ body {
   &__items {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    //grid-template-rows: repeat(2, 1fr);
     grid-column-gap: 11px;
     justify-items: center;
     
@@ -319,7 +319,6 @@ body {
 
         span {
           color: darken($color: $gray-line, $amount: 20);
-          font-weight: 500;
           font-weight: 600;
         }
 
@@ -342,7 +341,7 @@ body {
       }
 
       .pay-btn {
-        font-size: 16px;
+        font-size: 19px;
         font-weight: 600;
         width: 210px;
         padding: 16px;
