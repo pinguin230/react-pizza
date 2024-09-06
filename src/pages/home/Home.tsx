@@ -8,7 +8,7 @@ import Pagination from "../../components/pagination/Pagination.tsx";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux.ts";
 import qs from "qs"
 import {useNavigate} from "react-router-dom";
-import {setCategoryId, setFilters} from "../../store/redusers/search/FilterSlice.ts";
+import {setCategoryId, setFilters, setPagination} from "../../store/redusers/search/FilterSlice.ts";
 import {fetchPizzas} from "../../store/redusers/pizza/ActionCreators.ts";
 import {selectCurrentPage, selectSortBy} from "../../store/redusers/search/Selectors.ts";
 
@@ -83,7 +83,13 @@ const Home: FC = () => {
         }
         return false;
       })
-      .map((pizza, index) => <PizzaBlock key={pizza.title} index={index} pizza={pizza} />);
+      .map((pizza) => <PizzaBlock key={pizza.title} pizza={pizza} />);
+
+  useEffect(() => {
+    if (pizzas.length === 0) {
+      dispatch(setPagination(1));
+    }
+  }, [pizzas, dispatch]);
 
   return (
       <>
