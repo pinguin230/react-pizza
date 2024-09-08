@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from "react";
+import {FC, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux.ts";
 import {addItem} from "../../store/redusers/basket/BasketSlice.ts";
 import {IPizzaItem} from "../../store/redusers/pizza/IPizza.ts";
@@ -9,7 +9,7 @@ const PizzaBlock: FC<{ pizza: IPizzaItem}> = ({pizza}) => {
 
   const dispatch = useAppDispatch()
   const obj = useAppSelector(selectPizzaItemById(pizza.id))
-  const count: number = obj ? obj.count : 0
+  const count: number = obj ? obj.reduce((acc, item)=> { return acc + item.count }, 0) : 0
   const [activeSize, setActiveSize] = useState(0)
   const [activeType, setActiveType] = useState(0)
   const typeNames = ["тонка", "традиційна"]
